@@ -2,39 +2,50 @@ package com.convoyos.model;
 
 public class TelemetryData {
 
-    // Game
+    /**
+     * ------------------------------------------------
+     * ---------------- Game ----------------
+     * ------------------------------------------------
+     */
     private int gameId;
 
-    // Truck
+    /**
+     * ------------------------------------------------
+     * ---------------- Truck ----------------
+     * ------------------------------------------------
+     */
     private String truckBrand;
     private String truckName;
+
     private float speed;
     private float odometer;
+
     private float fuel;
-    private float engineRpm;
-    private float speedLimit;
     private float fuelCapacity;
     private float fuelAvgConsumption;
     private float fuelRange;
 
-    // Job
-    private boolean onJob;
-    private String cargo;
-    private String citySrc;
-    private String cityDst;
-    private long jobIncome;
-   
-
-
+    private float engineRpm;
+    private float speedLimit;
 
     /**
      * ------------------------------------------------
-     * ---------------- Setter & getters ----------------
+     * ---------------- Job ----------------
      * ------------------------------------------------
      */
-    
-    
-    
+    private boolean onJob;
+
+    private String cargo;
+    private String citySrc;
+    private String cityDst;
+
+    private long jobIncome;
+
+    /**
+     * ------------------------------------------------
+     * ---------------- Getters & Setters ----------------
+     * ------------------------------------------------
+     */
     public int getGameId() {
         return gameId;
     }
@@ -83,12 +94,44 @@ public class TelemetryData {
         this.fuel = fuel;
     }
 
+    public float getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public void setFuelCapacity(float fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    public float getFuelAvgConsumption() {
+        return fuelAvgConsumption;
+    }
+
+    public void setFuelAvgConsumption(float fuelAvgConsumption) {
+        this.fuelAvgConsumption = fuelAvgConsumption;
+    }
+
+    public float getFuelRange() {
+        return fuelRange;
+    }
+
+    public void setFuelRange(float fuelRange) {
+        this.fuelRange = fuelRange;
+    }
+
     public float getEngineRpm() {
         return engineRpm;
     }
 
     public void setEngineRpm(float engineRpm) {
         this.engineRpm = engineRpm;
+    }
+
+    public float getSpeedLimit() {
+        return speedLimit;
+    }
+
+    public void setSpeedLimit(float speedLimit) {
+        this.speedLimit = speedLimit;
     }
 
     public boolean isOnJob() {
@@ -126,72 +169,154 @@ public class TelemetryData {
     public long getJobIncome() {
         return jobIncome;
     }
-    
-    
+
     public void setJobIncome(long jobIncome) {
         this.jobIncome = jobIncome;
     }
 
-    public float getSpeedLimit() {
-        return speedLimit;
-    }
-
-    public void setSpeedLimit(float speedLimit) {
-        this.speedLimit = speedLimit;
-    }
-
-    public float getFuelCapacity() {
-        return fuelCapacity;
-    }
-
-    public void setFuelCapacity(float fuelCapacity) {
-        this.fuelCapacity = fuelCapacity;
-    }
-
-    public float getFuelAvgConsumption() {
-        return fuelAvgConsumption;
-    }
-
-    public void setFuelAvgConsumption(float fuelAvgConsumption) {
-        this.fuelAvgConsumption = fuelAvgConsumption;
-    }
-
-    public float getFuelRange() {
-        return fuelRange;
-    }
-
-    public void setFuelRange(float fuelRange) {
-        this.fuelRange = fuelRange;
-    }
-    
-    
-    
-
     /**
      * ------------------------------------------------
-     * ---------------- Metodos Extras ----------------
+     * ---------------- Métodos Calculados ----------------
      * ------------------------------------------------
      */
+
+    public String getGameName() {
+
+        switch (gameId) {
+
+            case 1:
+                return "ETS2";
+
+            case 2:
+                return "ATS";
+
+            default:
+                return "Desconocido";
+        }
+    }
+
+    /**
+     * Velocidad real en km/h
+     * Mantiene signo (+/-)
+     */
     public float getSpeedKmh() {
-        return Math.abs(speed * 3.6f);
+        return speed * 3.6f;
     }
-    
+
+    /**
+     * Velocidad para mostrar en UI
+     * Siempre positiva
+     */
+    public float getDisplaySpeedKmh() {
+        return Math.abs(getSpeedKmh());
+    }
+
+    public int getSpeedKmhRounded() {
+        return Math.round(getDisplaySpeedKmh());
+    }
+
     public boolean isMoving() {
-        return getSpeedKmh() > 1.0f;
+        return getDisplaySpeedKmh() > 1.0f;
     }
-    
+
+    public boolean isStopped() {
+        return !isMoving();
+    }
+
+    public int getEngineRpmRounded() {
+        return Math.round(engineRpm);
+    }
+
     public float getFuelPercent() {
+
         if (fuelCapacity <= 0) {
             return 0;
         }
+
         return (fuel / fuelCapacity) * 100f;
     }
-    
+
+    public boolean hasSpeedLimit() {
+        return speedLimit > 0;
+    }
+
+    public int getSpeedLimitKmh() {
+        return Math.round(speedLimit * 3.6f);
+    }
+
+    /**
+     * ------------------------------------------------
+     * ---------------- Métodos Formateados ----------------
+     * ------------------------------------------------
+     */
+
+    public String getTruckFullName() {
+        return truckBrand + " " + truckName;
+    }
+
+    public String getFuelFormatted() {
+
+        return String.format(
+                "%.1f L",
+                fuel);
+    }
+
+    public String getFuelCapacityFormatted() {
+
+        return String.format(
+                "%.1f L",
+                fuelCapacity);
+    }
+
+    public String getFuelRangeFormatted() {
+
+        return String.format(
+                "%,.0f km",
+                fuelRange);
+    }
+
     public String getFuelStatus() {
+
         return String.format(
                 "%.1f / %.1f L (%.1f%%)",
                 fuel,
                 fuelCapacity,
                 getFuelPercent());
+    }
+
+    public String getOdometerFormatted() {
+
+        return String.format(
+                "%,.0f km",
+                odometer);
+    }
+
+    public String getJobStatus() {
+
+        return onJob
+                ? "En ruta"
+                : "Sin trabajo";
+    }
+
+    public String getCurrencySymbol() {
+
+        switch (gameId) {
+
+            case 1:
+                return "€";
+
+            case 2:
+                return "$";
+
+            default:
+                return "";
+        }
+    }
+
+    public String getJobIncomeFormatted() {
+
+        return getCurrencySymbol()
+                + String.format("%.2f",
+                        jobIncome / 100.0);
     }
 }

@@ -8,16 +8,23 @@ public final class ConsoleDashboard {
     }
 
     public static void print(
-        TelemetryData telemetry) {
-        
+            TelemetryData telemetry) {
+
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
-        System.out.println("--------------------------------");
+        System.out.println("================================");
+        System.out.println("          ConvoyOS");
+        System.out.println("================================");
+        System.out.println();
 
         printGameInfo(telemetry);
 
+        System.out.println();
+
         printTruckInfo(telemetry);
+
+        System.out.println();
 
         printJobInfo(telemetry);
     }
@@ -26,58 +33,59 @@ public final class ConsoleDashboard {
             TelemetryData telemetry) {
 
         System.out.println(
-                "Game ID: "
-                + telemetry.getGameId());
+                "Juego: "
+                + telemetry.getGameName());
     }
 
     private static void printTruckInfo(
             TelemetryData telemetry) {
 
         System.out.println(
-                "Marca: "
-                + telemetry.getTruckBrand());
+                "Camión: "
+                + telemetry.getTruckFullName());
 
         System.out.println(
-                "Modelo: "
-                + telemetry.getTruckName());
+                "Velocidad: "
+                + telemetry.getSpeedKmhRounded()
+                + " km/h");
 
-        System.out.println(
-                "Speed (m/s): "
-                + telemetry.getSpeed());
-
-        System.out.println(
-                "Speed (km/h): "
-                + (telemetry.getSpeed() * 3.6f));
-
-        System.out.println(
-                "Odometer: "
-                + telemetry.getOdometer());
-        
         System.out.println(
                 "RPM: "
-                + telemetry.getEngineRpm());
+                + telemetry.getEngineRpmRounded());
 
-        System.out.println(
-                "Combustible: "
-                + telemetry.getFuel());
-
-        System.out.println(
-                "Límite de velocidad: "
-                + telemetry.getSpeedLimit());
-        
         System.out.println(
                 "Combustible: "
                 + telemetry.getFuelStatus());
 
         System.out.println(
                 "Autonomía: "
-                + String.format("%.0f km",
-                        telemetry.getFuelRange()));
-        
+                + telemetry.getFuelRangeFormatted());
+
+        System.out.println(
+                "Odómetro: "
+                + telemetry.getOdometerFormatted());
+
+        if (telemetry.hasSpeedLimit()) {
+
+            System.out.println(
+                    "Límite de velocidad: "
+                    + telemetry.getSpeedLimitKmh()
+                    + " km/h");
+        }
     }
 
     private static void printJobInfo(
             TelemetryData telemetry) {
+
+        System.out.println(
+                "Estado: "
+                + telemetry.getJobStatus());
+
+        if (!telemetry.isOnJob()) {
+            return;
+        }
+
+        System.out.println();
 
         System.out.println(
                 "Carga: "
@@ -90,9 +98,5 @@ public final class ConsoleDashboard {
         System.out.println(
                 "Destino: "
                 + telemetry.getCityDst());
-
-        System.out.println(
-                "En trabajo: "
-                + telemetry.isOnJob());
     }
 }
