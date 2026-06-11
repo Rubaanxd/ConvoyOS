@@ -50,12 +50,30 @@ public final class ConsoleDashboard {
                 + (telemetry.getSpeed() * 3.6f));
 
         System.out.println(
-                "Speed Corregida (km/h): "
-                + telemetry.getSpeedKmh());
-
-        System.out.println(
                 "Odometer: "
                 + telemetry.getOdometer());
+        
+        System.out.println(
+                "RPM: "
+                + telemetry.getEngineRpm());
+
+        System.out.println(
+                "Combustible: "
+                + telemetry.getFuel());
+
+        System.out.println(
+                "Límite de velocidad: "
+                + telemetry.getSpeedLimit());
+        
+        System.out.println(
+                "Combustible: "
+                + telemetry.getFuelStatus());
+
+        System.out.println(
+                "Autonomía: "
+                + String.format("%.0f km",
+                        telemetry.getFuelRange()));
+        
     }
 
     private static void printJobInfo(

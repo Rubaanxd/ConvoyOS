@@ -509,6 +509,38 @@ percent = value * 100
 
 ---
 
+## Sistema de Unidades
+
+El campo `game` (offset 52) identifica el simulador:
+
+- 1 = ETS2
+- 2 = ATS
+
+No debe utilizarse para convertir unidades físicas.
+
+Los datos en memoria compartida ya se encuentran en unidades estándar:
+
+| Tipo | Unidad |
+|--------|--------|
+| Velocidad | m/s |
+| Distancia | km o metros |
+| Combustible | litros |
+| Consumo | litros/km |
+| Masa | kg |
+| Temperatura | °C |
+| Presión | PSI |
+| Voltaje | volts |
+
+La única excepción es la moneda:
+
+- ATS → USD ($)
+- ETS2 → EUR (€)
+
+ConvoyOS utilizará internamente el sistema métrico para todas las conversiones y visualizaciones.
+
+
+---
+
 # Arquitectura Actual
 
 ```text

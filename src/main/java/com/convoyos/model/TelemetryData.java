@@ -12,6 +12,10 @@ public class TelemetryData {
     private float odometer;
     private float fuel;
     private float engineRpm;
+    private float speedLimit;
+    private float fuelCapacity;
+    private float fuelAvgConsumption;
+    private float fuelRange;
 
     // Job
     private boolean onJob;
@@ -128,6 +132,41 @@ public class TelemetryData {
         this.jobIncome = jobIncome;
     }
 
+    public float getSpeedLimit() {
+        return speedLimit;
+    }
+
+    public void setSpeedLimit(float speedLimit) {
+        this.speedLimit = speedLimit;
+    }
+
+    public float getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public void setFuelCapacity(float fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    public float getFuelAvgConsumption() {
+        return fuelAvgConsumption;
+    }
+
+    public void setFuelAvgConsumption(float fuelAvgConsumption) {
+        this.fuelAvgConsumption = fuelAvgConsumption;
+    }
+
+    public float getFuelRange() {
+        return fuelRange;
+    }
+
+    public void setFuelRange(float fuelRange) {
+        this.fuelRange = fuelRange;
+    }
+    
+    
+    
+
     /**
      * ------------------------------------------------
      * ---------------- Metodos Extras ----------------
@@ -139,5 +178,20 @@ public class TelemetryData {
     
     public boolean isMoving() {
         return getSpeedKmh() > 1.0f;
+    }
+    
+    public float getFuelPercent() {
+        if (fuelCapacity <= 0) {
+            return 0;
+        }
+        return (fuel / fuelCapacity) * 100f;
+    }
+    
+    public String getFuelStatus() {
+        return String.format(
+                "%.1f / %.1f L (%.1f%%)",
+                fuel,
+                fuelCapacity,
+                getFuelPercent());
     }
 }

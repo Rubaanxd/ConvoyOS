@@ -13,18 +13,21 @@ public final class TelemetryOffsets {
     public static final int GAME_ID = 52;
 
     /*
-     * ==========================================
-     * TRUCK
-     * ==========================================
-     */
+    * ==========================================
+    * TRUCK
+    * ==========================================
+    */
+
     public static final int SPEED = 948;
     public static final int ENGINE_RPM = 952;
     public static final int FUEL = 1000;
     public static final int ODOMETER = 1056;
     public static final int SPEED_LIMIT = 1068;
-
     public static final int TRUCK_BRAND = 2364;
     public static final int TRUCK_NAME = 2492;
+    public static final int FUEL_CAPACITY = 704;
+    public static final int FUEL_AVG_CONSUMPTION = 1004;
+    public static final int FUEL_RANGE = 1008;
 
     /*
      * ==========================================

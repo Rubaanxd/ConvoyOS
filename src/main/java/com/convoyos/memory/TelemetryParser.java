@@ -43,6 +43,29 @@ public class TelemetryParser {
                         TelemetryOffsets.TRUCK_NAME,
                         64));
         
+        telemetry.setEngineRpm(
+        buffer.getFloat(
+                TelemetryOffsets.ENGINE_RPM));
+
+        telemetry.setFuel(
+                buffer.getFloat(
+                        TelemetryOffsets.FUEL));
+
+        telemetry.setSpeedLimit(
+                buffer.getFloat(
+                        TelemetryOffsets.SPEED_LIMIT));   
+        
+        telemetry.setFuelCapacity(
+                buffer.getFloat(
+                        TelemetryOffsets.FUEL_CAPACITY));
+
+        telemetry.setFuelAvgConsumption(
+                buffer.getFloat(
+                        TelemetryOffsets.FUEL_AVG_CONSUMPTION));
+
+        telemetry.setFuelRange(
+                buffer.getFloat(
+                        TelemetryOffsets.FUEL_RANGE));
         
          /**
         * ------------------------------------------------
