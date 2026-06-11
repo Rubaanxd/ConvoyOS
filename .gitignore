@@ -1,0 +1,21 @@
+# Maven
+target/
+
+# NetBeans
+nbproject/private/
+
+# IntelliJ
+.idea/
+
+# VSCode
+.vscode/
+
+# Configuración local
+application.properties
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini

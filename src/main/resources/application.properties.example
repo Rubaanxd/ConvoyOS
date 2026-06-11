@@ -1,0 +1,10 @@
+# Discord
+discord.client.id=
+discord.client.secret=
+
+# Supabase
+supabase.url=
+supabase.key=
+
+# Telemetry
+telemetry.refresh.ms=1000
