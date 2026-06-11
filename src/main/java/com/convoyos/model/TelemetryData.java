@@ -29,4 +29,8 @@ public class TelemetryData {
     public void setOdometer(float odometer) {
         this.odometer = odometer;
     }
+    
+    public float getSpeedKmh() {
+        return Math.abs(speed * 3.6f);
+    }
 }

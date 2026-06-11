@@ -8,22 +8,25 @@ public class TelemetryParser {
 
     public TelemetryData parse(byte[] data) {
 
-        ByteBuffer buffer = ByteBuffer
-                .wrap(data)
-                .order(ByteOrder.LITTLE_ENDIAN);
+        ByteBuffer buffer =
+                ByteBuffer.wrap(data)
+                          .order(ByteOrder.LITTLE_ENDIAN);
 
-        TelemetryData telemetry = new TelemetryData();
+        TelemetryData telemetry =
+                new TelemetryData();
 
         telemetry.setGameId(
-                buffer.getInt(TelemetryOffsets.GAME_ID));
+                buffer.getInt(
+                        TelemetryOffsets.GAME_ID));
 
         telemetry.setSpeed(
-                buffer.getFloat(TelemetryOffsets.SPEED));
+                buffer.getFloat(
+                        TelemetryOffsets.SPEED));
 
         telemetry.setOdometer(
-                buffer.getFloat(TelemetryOffsets.ODOMETER));
+                buffer.getFloat(
+                        TelemetryOffsets.ODOMETER));
 
         return telemetry;
     }
-
 }

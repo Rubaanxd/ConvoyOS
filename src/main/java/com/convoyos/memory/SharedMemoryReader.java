@@ -8,9 +8,16 @@ public class SharedMemoryReader {
 
     private static final String MMF_NAME = "Local\\SCSTelemetry";
 
+    // Tamaño total documentado de la estructura
+    private static final int MEMORY_SIZE = 21620;
+
+    private HANDLE handle;
+
+    private Pointer memoryPointer;
+
     public boolean connect() {
 
-        HANDLE handle = Kernel32.INSTANCE.OpenFileMapping(
+        handle = Kernel32.INSTANCE.OpenFileMapping(
                 Kernel32.FILE_MAP_READ,
                 false,
                 MMF_NAME);
@@ -20,7 +27,8 @@ public class SharedMemoryReader {
             return false;
         }
 
-        long pointerValue = Pointer.nativeValue(handle.getPointer());
+        long pointerValue =
+                Pointer.nativeValue(handle.getPointer());
 
         if (pointerValue == 0) {
             System.out.println("Handle inválido");
@@ -29,8 +37,68 @@ public class SharedMemoryReader {
 
         System.out.println("Handle obtenido correctamente");
 
-        Kernel32.INSTANCE.CloseHandle(handle);
+        return true;
+    }
+
+    public boolean mapMemory() {
+
+        if (handle == null) {
+            return false;
+        }
+
+        memoryPointer =
+                Kernel32.INSTANCE.MapViewOfFile(
+                        handle,
+                        Kernel32.FILE_MAP_READ,
+                        0,
+                        0,
+                        MEMORY_SIZE);
+
+        if (memoryPointer == null) {
+
+            System.out.println("MapViewOfFile devolvió null");
+
+            return false;
+        }
+
+        System.out.println("Memoria mapeada correctamente");
 
         return true;
+    }
+
+    public byte[] readMemory() {
+
+        if (memoryPointer == null) {
+            return null;
+        }
+
+        byte[] data = new byte[MEMORY_SIZE];
+
+        memoryPointer.read(
+                0,
+                data,
+                0,
+                MEMORY_SIZE);
+
+        return data;
+    }
+
+    public void close() {
+
+        if (memoryPointer != null) {
+
+            Kernel32.INSTANCE.UnmapViewOfFile(
+                    memoryPointer);
+
+            memoryPointer = null;
+        }
+
+        if (handle != null) {
+
+            Kernel32.INSTANCE.CloseHandle(
+                    handle);
+
+            handle = null;
+        }
     }
 }
