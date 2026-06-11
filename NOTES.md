@@ -499,6 +499,14 @@ percent = value * 100
 | trailer[10] | struct[10] | 6000 | 15600 bytes | Ver estructura individual (1560 bytes c/u) |
 
 
+**Notas importantes**:
+- Todos los datos se leen directamente en little-endian (formato de Windows)
+- Los campos marcados con "-" en la columna Conversión no requieren transformación matemática
+- Los strings requieren reemplazar caracteres null (\u0000) al final del string
+- Los valores monetarios están en centésimas de moneda (dividir por 100 para obtener el valor real)
+- Los timestamps están en microsegundos (dividir por 1,000,000 para segundos)
+- Los tiempos de juego están en minutos (convertir a formato HH:MM si es necesario)
+
 ---
 
 # Arquitectura Actual
