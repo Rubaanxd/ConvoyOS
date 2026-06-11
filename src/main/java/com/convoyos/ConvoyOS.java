@@ -1,39 +1,31 @@
 package com.convoyos;
 
-import com.convoyos.memory.SharedMemoryReader;
-import com.convoyos.memory.TelemetryParser;
 import com.convoyos.model.TelemetryData;
+import com.convoyos.telemetry.TelemetryService;
 import com.convoyos.ui.ConsoleDashboard;
 
 public class ConvoyOS {
 
     public static void main(String[] args) {
 
-        SharedMemoryReader reader = new SharedMemoryReader();
+        TelemetryService telemetryService =
+                new TelemetryService();
 
-        if (!reader.connect()) {
+        if (!telemetryService.start()) {
             return;
         }
-
-        if (!reader.mapMemory()) {
-            return;
-        }
-
-        TelemetryParser parser = new TelemetryParser();
 
         try {
 
             while (true) {
 
                 TelemetryData telemetry =
-                        parser.parse(
-                                reader.readMemory());
+                        telemetryService.readTelemetry();
 
                 ConsoleDashboard.print(
                         telemetry);
 
                 Thread.sleep(1000);
-
             }
 
         } catch (InterruptedException e) {
@@ -42,7 +34,7 @@ public class ConvoyOS {
 
         } finally {
 
-            reader.close();
+            telemetryService.stop();
         }
     }
 }
