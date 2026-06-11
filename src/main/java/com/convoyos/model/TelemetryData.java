@@ -2,25 +2,57 @@ package com.convoyos.model;
 
 public class TelemetryData {
 
+    // Game
     private int gameId;
-    private float speed;
-    private float odometer;
+
+    // Truck
     private String truckBrand;
     private String truckName;
-    
-    
+    private float speed;
+    private float odometer;
+    private float fuel;
+    private float engineRpm;
+
+    // Job
+    private boolean onJob;
+    private String cargo;
+    private String citySrc;
+    private String cityDst;
+    private long jobIncome;
+   
+
+
+
     /**
      * ------------------------------------------------
      * ---------------- Setter & getters ----------------
      * ------------------------------------------------
      */
-
+    
+    
+    
     public int getGameId() {
         return gameId;
     }
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
+    }
+
+    public String getTruckBrand() {
+        return truckBrand;
+    }
+
+    public void setTruckBrand(String truckBrand) {
+        this.truckBrand = truckBrand;
+    }
+
+    public String getTruckName() {
+        return truckName;
+    }
+
+    public void setTruckName(String truckName) {
+        this.truckName = truckName;
     }
 
     public float getSpeed() {
@@ -39,31 +71,68 @@ public class TelemetryData {
         this.odometer = odometer;
     }
 
-    public String getTruckBrand() {
-        return truckBrand;
+    public float getFuel() {
+        return fuel;
     }
 
-    public void setTruckBrand(String truckBrand) {
-        this.truckBrand = truckBrand;
+    public void setFuel(float fuel) {
+        this.fuel = fuel;
     }
 
-    public String getTruckName() {
-        return truckName;
+    public float getEngineRpm() {
+        return engineRpm;
     }
 
-    public void setTruckName(String truckName) {
-        this.truckName = truckName;
+    public void setEngineRpm(float engineRpm) {
+        this.engineRpm = engineRpm;
+    }
+
+    public boolean isOnJob() {
+        return onJob;
+    }
+
+    public void setOnJob(boolean onJob) {
+        this.onJob = onJob;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getCitySrc() {
+        return citySrc;
+    }
+
+    public void setCitySrc(String citySrc) {
+        this.citySrc = citySrc;
+    }
+
+    public String getCityDst() {
+        return cityDst;
+    }
+
+    public void setCityDst(String cityDst) {
+        this.cityDst = cityDst;
+    }
+
+    public long getJobIncome() {
+        return jobIncome;
     }
     
     
+    public void setJobIncome(long jobIncome) {
+        this.jobIncome = jobIncome;
+    }
+
     /**
      * ------------------------------------------------
      * ---------------- Metodos Extras ----------------
      * ------------------------------------------------
      */
-
-
-    
     public float getSpeedKmh() {
         return Math.abs(speed * 3.6f);
     }

@@ -25,6 +25,12 @@ public class TelemetryParser {
         telemetry.setOdometer(
                 buffer.getFloat(TelemetryOffsets.ODOMETER));
         
+         /**
+        * ------------------------------------------------
+        * ---------------- Truck ----------------
+        * ------------------------------------------------
+        */
+        
         telemetry.setTruckBrand(
                 readString(
                         buffer,
@@ -36,6 +42,32 @@ public class TelemetryParser {
                         buffer,
                         TelemetryOffsets.TRUCK_NAME,
                         64));
+        
+        
+         /**
+        * ------------------------------------------------
+        * ---------------- JOBS ----------------
+        * ------------------------------------------------
+        */
+
+        
+        telemetry.setCargo(
+                readString(buffer,
+                        TelemetryOffsets.CARGO,
+                        64));
+
+        telemetry.setCitySrc(
+                readString(buffer,
+                        TelemetryOffsets.CITY_SRC,
+                        64));
+
+        telemetry.setCityDst(
+                readString(buffer,
+                        TelemetryOffsets.CITY_DST,
+                        64));
+        
+        telemetry.setOnJob(
+                buffer.get(TelemetryOffsets.ON_JOB) != 0);
 
         return telemetry;
     }
@@ -61,6 +93,6 @@ public class TelemetryParser {
                 bytes,
                 0,
                 end,
-                StandardCharsets.UTF_8);
+                java.nio.charset.Charset.forName("Windows-1252"));
     }
 }
