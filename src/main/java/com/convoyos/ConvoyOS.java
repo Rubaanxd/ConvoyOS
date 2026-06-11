@@ -34,6 +34,14 @@ public class ConvoyOS {
                 System.out.println(
                         "Game ID: "
                         + telemetry.getGameId());
+                
+                System.out.println(
+                        "Marca: "
+                        + telemetry.getTruckBrand());
+
+                System.out.println(
+                        "Modelo: "
+                        + telemetry.getTruckName());
 
                 System.out.println(
                         "Speed (m/s): "

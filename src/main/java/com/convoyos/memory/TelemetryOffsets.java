@@ -10,5 +10,9 @@ public final class TelemetryOffsets {
     public static final int SPEED = 948;
 
     public static final int ODOMETER = 1056;
+    
+    public static final int TRUCK_BRAND = 2364;
+
+    public static final int TRUCK_NAME = 2492;
 
 }
