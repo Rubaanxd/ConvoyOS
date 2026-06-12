@@ -319,4 +319,6 @@ public class TelemetryData {
                 + String.format("%.2f",
                         jobIncome / 100.0);
     }
+    
+    
 }

@@ -1,167 +1,148 @@
 # ConvoyOS
 
-ConvoyOS es una aplicación desarrollada en Java para American Truck Simulator (ATS) y Euro Truck Simulator 2 (ETS2) que consume la telemetría expuesta por el plugin SCS SDK mediante memoria compartida.
+ConvoyOS es una aplicación desarrollada en Java para American Truck Simulator (ATS) y Euro Truck Simulator 2 (ETS2) que obtiene información directamente de la memoria compartida de SCS Software y la transforma en métricas útiles para conductores, convoyes y futuras integraciones web.
 
-El objetivo del proyecto es proporcionar una plataforma modular para monitoreo, estadísticas, eventos e integraciones basadas en la telemetría del simulador.
+Actualmente el proyecto permite leer datos de telemetría en tiempo real y generar estadísticas de sesión.
 
----
+## Características
 
-## 🚛 Características Actuales
+### Telemetría en tiempo real
 
-### Telemetría
-
-* Conexión a memoria compartida (`Local\SCSTelemetry`)
-* Lectura de telemetría en tiempo real
-* Parsing de datos en formato Little Endian
-* Soporte para valores numéricos, booleanos y cadenas de texto
-
-### Datos disponibles
-
-#### Juego
-
-* Game ID
-
-#### Camión
-
-* Marca
-* Modelo
-* Velocidad
+* Detección del juego (ATS / ETS2)
+* Marca y modelo del camión
+* Velocidad actual
+* RPM del motor
 * Odómetro
+* Combustible actual
+* Capacidad de combustible
+* Autonomía estimada
+* Límite de velocidad
 
-#### Trabajo
+### Información de trabajo
 
-* Carga actual
-* Ciudad origen
-* Ciudad destino
-* Estado del trabajo
+* Estado del conductor
+* Carga transportada
+* Ciudad de origen
+* Ciudad de destino
+* Ingreso del trabajo
 
-### Dashboard
+### Estadísticas de sesión
 
-* Dashboard de consola en tiempo real
+* Fecha y hora de inicio
+* Última lectura recibida
+* Distancia recorrida durante la sesión
+* Duración total de la sesión
+* Tiempo efectivo de conducción
+* Velocidad promedio de conducción
 
----
-
-## 📋 Requisitos
-
-### Software
-
-* Java 17+
-* Maven 3.9+
-* Windows 10 / Windows 11
-
-### Juegos compatibles
-
-* American Truck Simulator
-* Euro Truck Simulator 2
-
-### Plugin requerido
-
-RenCloud SCS SDK Plugin v1.12.1
-
----
-
-## 🏗️ Arquitectura
+## Arquitectura
 
 ```text
-ATS / ETS2
-    │
-    ▼
-RenCloud Plugin
-    │
-    ▼
-Shared Memory
-    │
-    ▼
-ConvoyOS
-```
-
----
-
-## 📁 Estructura del Proyecto
-
-```text
-src/main/java/com/convoyos
-
+com.convoyos
 ├── memory
-│   ├── SharedMemoryReader.java
-│   ├── TelemetryParser.java
-│   └── TelemetryOffsets.java
+│   ├── SharedMemoryReader
+│   ├── TelemetryOffsets
+│   └── TelemetryParser
 │
 ├── model
-│   └── TelemetryData.java
+│   └── TelemetryData
+│
+├── telemetry
+│   └── TelemetryService
+│
+├── stats
+│   └── SessionStats
 │
 ├── ui
-│   └── ConsoleDashboard.java
+│   └── ConsoleDashboard
 │
-└── ConvoyOS.java
+└── ConvoyOS
 ```
 
+## Tecnologías
+
+* Java 17
+* Maven
+* JNA
+* Shared Memory SDK de SCS Software
+
+## Estado actual
+
+Versión actual: v0.2.0
+
+Implementado:
+
+* Lectura de memoria compartida
+* Parseo de telemetría
+* Dashboard de consola
+* Información de trabajos
+* Estadísticas de sesión
+
+En desarrollo:
+
+* Persistencia de sesiones
+* Base de datos local
+* Dashboard web
+* Ranking de conductores
+* Sistema de convoyes
+
+## Ejemplo de salida
+
+```text
+================================
+          ConvoyOS
+================================
+
+Juego: ATS
+
+Camión: Kenworth W900
+Velocidad: 78 km/h
+RPM: 1450
+Combustible: 395.5 / 454.3 L (87.1%)
+Autonomía: 1,236 km
+Odómetro: 104 km
+
+Sesión:
+Inicio: 104.2 km
+Actual: 122.0 km
+Recorridos: 17.8 km
+Duración: 00:35:22
+Velocidad Promedio: 68.4 km/h
+Inicio sesión: 11/06/2026 18:57:50
+Última lectura: 11/06/2026 19:33:12
+Tiempo conduciendo: 00:28:47
+
+Estado: En ruta
+
+Carga: Centeno
+Origen: Basaseachi
+Destino: Nuevo Casas Grandes
+```
+
+## Notas
+
+Las posiciones de memoria, conversiones de datos y observaciones técnicas se documentan en el archivo:
+
+```text
+NOTES.md
+```
+
+Este archivo contiene la referencia utilizada durante el desarrollo para interpretar correctamente la memoria compartida de ATS y ETS2.
+
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
-### Fase 1 - Lectura de Telemetría
+### v0.3.0
+- Persistencia de sesiones
+- Base de datos SQLite
+- Historial de conducción
 
-* [x] Conexión a memoria compartida
-* [x] Lectura de enteros
-* [x] Lectura de floats
-* [x] Lectura de booleanos
-* [x] Lectura de strings
-* [x] Dashboard de consola
+### v0.4.0
+- API REST
+- Dashboard web
 
-### Fase 2 - Información del Vehículo
-
-* [ ] RPM
-* [ ] Combustible
-* [ ] Límite de velocidad
-* [ ] Daños
-
-### Fase 3 - Eventos
-
-* [ ] Inicio de trabajo
-* [ ] Finalización de trabajo
-* [ ] Cancelación de trabajo
-* [ ] Repostajes
-* [ ] Multas
-
-### Fase 4 - Estadísticas
-
-* [ ] Distancia recorrida
-* [ ] Historial de viajes
-* [ ] Tiempo de conducción
-* [ ] Consumo de combustible
-
-### Fase 5 - Integraciones
-
-* [ ] Discord Rich Presence
-* [ ] API REST
-* [ ] Sincronización en la nube
-
-### Fase 6 - Interfaz Gráfica
-
-* [ ] Dashboard Desktop
-* [ ] Widgets
-* [ ] Configuración visual
-
----
-
-## 📚 Documentación
-
-La información técnica del proyecto se encuentra en:
-
-* `NOTES.md`
-
-Incluye:
-
-* Offsets validados
-* Conversión de unidades
-* Encoding de strings
-* Validaciones realizadas
-* Decisiones técnicas
-* Hallazgos durante el desarrollo
-
----
-
-## 📄 Licencia
-
-GNU General Public License v3.0 (GPL-3.0)
+### v0.5.0
+- Ranking de conductores
+- Estadísticas globales
+- Sistema de convoyes

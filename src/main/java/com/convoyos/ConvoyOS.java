@@ -23,7 +23,8 @@ public class ConvoyOS {
                         telemetryService.readTelemetry();
 
                 ConsoleDashboard.print(
-                        telemetry);
+                        telemetry,
+                        telemetryService.getSessionStats());
 
                 Thread.sleep(1000);
             }

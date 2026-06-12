@@ -1,6 +1,7 @@
 package com.convoyos.ui;
 
 import com.convoyos.model.TelemetryData;
+import com.convoyos.stats.SessionStats;
 
 public final class ConsoleDashboard {
 
@@ -8,7 +9,8 @@ public final class ConsoleDashboard {
     }
 
     public static void print(
-            TelemetryData telemetry) {
+            TelemetryData telemetry,
+            SessionStats sessionStats) {
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -23,6 +25,10 @@ public final class ConsoleDashboard {
         System.out.println();
 
         printTruckInfo(telemetry);
+
+        System.out.println();
+
+        printSessionInfo(sessionStats);
 
         System.out.println();
 
@@ -72,6 +78,44 @@ public final class ConsoleDashboard {
                     + telemetry.getSpeedLimitKmh()
                     + " km/h");
         }
+    }
+
+    private static void printSessionInfo(
+            SessionStats sessionStats) {
+
+        System.out.println("Sesión:");
+
+        System.out.println(
+                "Inicio: "
+                + sessionStats.getStartOdometerFormatted());
+
+        System.out.println(
+                "Actual: "
+                + sessionStats.getCurrentOdometerFormatted());
+
+        System.out.println(
+                "Recorridos: "
+                + sessionStats.getDistanceFormatted());
+        
+        System.out.println(
+                "Duración: "
+                + sessionStats.getSessionDurationFormatted());
+
+        System.out.println(
+                "Velocidad Promedio: "
+                + sessionStats.getAverageSpeedFormatted());
+        
+        System.out.println(
+                "Inicio sesión: "
+                + sessionStats.getStartDateFormatted());
+
+        System.out.println(
+                "Última lectura: "
+                + sessionStats.getEndDateFormatted());
+        
+        System.out.println(
+                "Tiempo conduciendo: "
+                + sessionStats.getDrivingTimeFormatted());
     }
 
     private static void printJobInfo(
